@@ -1,0 +1,85 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes,force:hasRecordId,force:appHostable" controller="ObjectListComponentController" access="global">
+	<aura:attribute name="caseList" type="list" />
+    <aura:attribute name="displayCaseList" type="list" />
+    <aura:attribute name="objectWrapperData" type="ObjectWrapper" />
+    <aura:attribute name="detailPageActivated" type="Boolean" default="false"/>
+	<aura:attribute name="recordId" type="String" />    
+    <aura:attribute name="val" type="String" default=""/>
+    <aura:attribute name="casesId" type="String"/>
+    <aura:attribute name="isNotSearch" type="Boolean" />
+    <aura:attribute name="refreshCaseId" type="String" default=''/>
+    <aura:attribute name="showMobile" type="Boolean" default="true"/>
+    <aura:attribute name="isSearchByDate" type="Boolean" default="false" />
+    <aura:attribute name="scrollActivated" type="Boolean" default="false" />
+    <aura:attribute name="objectName" type="String" default="Contact" />
+    <aura:attribute name="fieldSetName" type="String" default="FieldsToFilter" />
+    <aura:attribute name="fieldSetToDisplayData" type="String" default="FieldsToDisplay" />
+    <aura:attribute name="pageNumber" type="Integer" />
+    <aura:attribute name="fetchedAllRecords" type="Boolean" default="false" />
+
+    <aura:attribute name="searchOptions" type="Object" default="{}" />
+    <aura:attribute name="sortDirection" type="String" default="A-Z" />
+    
+    <aura:handler event="aura:waiting" action="{!c.toggleSpinner}"/>
+	<aura:handler event="aura:doneWaiting" action="{!c.toggleSpinner}"/>
+    
+    <aura:registerEvent name="cmpEvent" type="c:pc_ScrollEvent"/>
+    <aura:handler name="cmpEvent" event="c:pc_ScrollEvent" action="{!c.handleCapture}" />
+    <ltng:require styles="{!join(',',
+                          $Resource.JADE_PC + '/css/font-awesome.min.css',
+                          $Resource.JADE_PC + '/css/fullcalendar.css')}" />
+    <ltng:require scripts="{!join(',',
+                           $Resource.JADE_PC + '/js/jquery-3.1.1.min.js',
+                           $Resource.JADE_PC + '/js/underscore-min.js')}"
+                  afterScriptsLoaded="{!c.doInit}"  />
+    
+    <center><ui:spinner class="spin" aura:id="spinner" isVisible="false"/></center>
+    <div class="{!if(v.showMobile, '', 'hidden-xs hidden-sm ') + 'case-list-left'}" id="caseList" style="float:left;width:50%;padding: 25px 25px 0;">
+        <div >
+            <ui:inputtext aura:id="searchCaseId" class="form-control" placeholder="Search Records" updateOn="keyup" value="{!v.val}" keyup="{!c.search}" />
+        </div>
+        <div class="case-list-tabs" style="margin-top: 15px;">
+            <ul class="select-list-box">
+                <li style="display: block;">
+                    <span style="   border: 1px solid #414141;
+                                    float:left;
+                                    height: 35px;
+                                    float: left;
+                                    width: 50%;
+                                    padding-top: 1%;
+                                    text-align: center;">Sort By</span>
+                    <div class="{!if($Browser.isPhone, '', 'select-duration form-control ')}">
+                        <ui:inputSelect class="{!if($Browser.isPhone, 'select-duration form-control ', '') + 'select-list'}" aura:id="sort" change="{!c.sortOptionChanged}">
+                        </ui:inputSelect>
+                    </div>
+                    <button class="btn btn-primary" style="background-color: #414141;float: left; width:9%;height:33px;" onclick="{!c.toggleSortDirection}"><i aura:id="sortDirection" style="color: white;" class="fa fa-arrow-up"></i></button>
+                </li>
+            </ul>
+            <div id="myTabContent" class="tab-content" style="margin-right: -25px;padding-right: 25px;overflow-y: auto;max-height: 78vh">
+                <div class="tab-pane fade active in">
+                    <ul class="case-lists list-unstyled">
+                        <aura:iteration items="{!v.objectWrapperData.headerLabels}" var="header">
+                        	{!header},                         	
+                        </aura:iteration>
+                        <aura:iteration items="{!v.displayCaseList}" var="detailRow" indexVar="i">
+                        	<li class = "cursorAtList" data-index="{!i}" onclick="{!c.navigateToDetail}">
+                                <aura:iteration items="{!detailRow}" var="detail">
+                                <div class="case-list-wrap">
+                                    <aura:if isTrue="{!detail.label != 'Id'}">
+                                    <label>{!detail.label} : </label> {!detail.value}
+                                	</aura:if>
+                                </div>
+                                </aura:iteration>
+                            </li>                        	
+                        </aura:iteration>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <aura:if isTrue="{!v.recordId}">
+        <div style= "position: absolute;left: 50%;width:50%;overflow-y: scroll;widht: 50%;height: 100%;">
+            <force:recordView recordId="{!v.recordId}" />
+        </div>
+    </aura:if>
+</aura:component>

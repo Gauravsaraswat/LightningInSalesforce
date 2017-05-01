@@ -1,0 +1,107 @@
+.THIS .iconFormat {
+    padding-bottom: 5px;
+    padding-right: 5px;
+}
+
+.THIS .form-control{
+    border: 1px solid #e1e1e1;
+    border-radius: 5px;
+    box-shadow: none;
+    height: 40px;
+    width: 100%;
+    padding: 6px 12px;
+}
+.THIS img{
+    height: 50px;
+}
+.THIS a:hover{
+    cursor:pointer !important; 
+}
+.THIS .case-lists li{
+    border-top: 2px solid #eae8eb;
+    display: inline-block;
+    padding: 20px 20px 20px 20px;
+    position: relative;
+    width: 100%;
+}
+
+.THIS .case-lists{
+    margin-top: 20px;
+    padding-left: 0;
+    list-style: none;
+}
+.THIS .cursorAtList:hover {
+    cursor:pointer;
+    background-color: #f5f5f5;
+}
+
+.THIS .spin{
+    z-index:1000;
+    position: absolute;
+    top: 50%;
+    left:50%;
+}
+.THIS .form-group.required .control-label:after { 
+    color: #d00;
+    content: "*";
+    margin-left: 8px;
+    margin-top : 5px;
+    top:7px;
+}
+
+.THIS .form-group{
+    margin-top: 1%;
+}
+
+@media  only screen and (min-device-width: 768px) and (max-device-width : 1024px) {
+    .THIS .select-duration {
+        padding:initial;
+    }
+}
+
+
+.THIS .select-duration {
+  margin-left : 0%;
+  width: 41% !important;
+  height: 3%;
+  border-radius: 1px;
+  background-color: #414141 !important;
+  float:left;
+}
+
+.THIS .select-list-box{
+    margin-top: 2%;
+    margin-bottom : 0%;
+    border-top: 2px solid #eae8eb;
+    display: inline-block;
+   	padding-top: 2%;
+    position: relative;
+    width: 100%;
+    padding-left:0%;
+}
+.THIS *{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.THIS label{
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.THIS .select-list {
+    width: 100%;
+  border: white;
+  height: 1% !important;
+  font-family: NotoSans;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal; 
+  letter-spacing: normal;
+  color: #ffffff !important;
+  background-color: #414141 !important;
+}
